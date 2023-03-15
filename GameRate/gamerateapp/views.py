@@ -2,11 +2,12 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from gamerateapp.models import Game
 from gamerateapp.models import Category
-from gamerateapp.models import Review
+from gamerateapp.models import Review, User, Publisher, UserProfile
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from gamerateapp.forms import ReviewForm
 from django.urls import reverse
+from django.shortcuts import redirect
 from gamerateapp.forms import UserForm, UserProfileForm
 # Create your views here.
 
@@ -130,7 +131,9 @@ def profile(request, username):
     return render(request, 'gamerateapp/profile.html', context_dict)
     
 def publishers(request, username):
-
+    
+    context_dict = {}
+    
     publishers = Publisher.objects.all()
     
     context_dict['publishers'] = publishers
