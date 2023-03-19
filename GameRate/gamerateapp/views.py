@@ -1,14 +1,15 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from gamerateapp.models import Game
 from gamerateapp.models import Category
 from gamerateapp.models import Review, User, Publisher, UserProfile
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth import logout
-from gamerateapp.forms import ReviewForm
+from django.contrib.auth import logout, authenticate, login
+from gamerateapp.forms import ReviewForm, UserForm, UserProfileForm
 from django.urls import reverse
 from django.shortcuts import redirect
 from gamerateapp.forms import UserForm, UserProfileForm
+
 # Create your views here.
 
 def index(request):
@@ -140,7 +141,7 @@ def publishers(request, username):
 
     
     return render(request, 'gamerateapp/publishers.html', context_dict)
-    
+   
 @login_required
 def add_game(request):
     form = GameForm()
@@ -176,14 +177,14 @@ def register(request):
                 profile.picture = request.FILES['picture']
                 
             profile.save()
-            
+
             registered = True
         else:
             print(user_form.errors, profile_form.errors)
     else:
         user_form = UserForm()
         profile_form = UserProfileForm()
-        
+       
     return render(request, 'gamerateapp/register.html', context={'user_form': user_form, 'profile_form': profile_form, 'registered': registered})
     
 def user_login(request):
