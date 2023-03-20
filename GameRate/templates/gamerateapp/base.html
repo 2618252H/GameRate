@@ -55,6 +55,7 @@
 					</div>
                     <div class="sidebar-sticky" id= "categories-listing">
                     {% block sidebar_block %}
+						{% get_category_list category %}
                     {% endblock %}
                     </div>
                 </nav>
