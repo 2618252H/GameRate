@@ -1,7 +1,9 @@
 import importlib
 import os
+import warnings
 from django.test import TestCase
 from django.urls import reverse
+from django.conf import settings
 from gamerateapp.models import Category, Game, Review, UserProfile
 
 class projectStructureTests(TestCase):
@@ -42,6 +44,15 @@ class indexTests(TestCase):
         self.assertEqual(response.status_code, 200, "Requesting the index page failed")
         self.assertContains(response, "GameRate Home Page", msg_prefix="The index view does not return the expected response")
 
+    def contextDictionary(self):
+        expected_top_gameplay = list(Game.objects.order_by('-gameplay_rating')[:1])
+        expected_top_graphics = list(Game.objects.order_by('-gameplay_rating')[:1])
+
+        self.assertTrue('top_gameplay' in self.response.context, "The 'top_gameplay' variable couldn't be found in the context dictionary for the index() view")
+        self.assertEquals()
+        self.assertTrue('top_graphics' in self.response.context, "The 'top_graphics' variable couldn't be found in the context dictionary for the index() view")
+
+
 class categoryTests(TestCase):
     def setup(self):
         self.views_module = importlib.import_module('gamerateapp.views')
@@ -76,5 +87,15 @@ class modelTest(TestCase):
         self.assertEqual(review_py.story_rating, 5, "Tests on the Review model failed")
         self.assertEqual(review_py.graphics_rating, 8, "Tests on the Review model failed")
 
+class databaseTest(TestCase):
+    def setup(self):
+        pass
 
-        
+    def database_variable_exists(self):
+        self.assertTrue(settings.DATABASES, "Project's settings module does not have a DATABASES variable")
+        self.assertTrue('default' in settings.DATABASES, "There is no 'default' database configuration in the project's DATABASES configuration variable")
+
+# class populationScriptTest(TestCase):
+#     def setup(self):
+#         try:
+#             import populate_
