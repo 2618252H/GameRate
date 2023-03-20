@@ -1,16 +1,16 @@
 import os
 import django
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'project_name.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'GameRate.settings')
 django.setup()
 
 from django.contrib.auth.models import User
-from models import UserProfile, Publisher, Category, Game, Review
+from gamerateapp.models import UserProfile, Publisher, Category, Game, Review
 
 def populate():
     # create users
     users = [
-        {'username': 'user1', 'website': 'user1@example.com', 'picture':'picture'}, #add more users
+        {'username': 'user1', 'website': 'user1@example.com', 'picture':{%static 'images/GameRate.png'}, #add more users
 
     ]
     publishers = [
@@ -25,9 +25,9 @@ def populate():
     games = [
         {
             'name': 'Game1',
-            'publisher': Publisher.objects.get(profile__user__username='Publisher1'),
+            'publisher': 'publisher1'),
             'game_Description': 'Game1 Description',
-            'category': Category.objects.get(name='Action'),
+            'category': 'action'),
             'story_rating': 10,
             'gameplay_rating': 10,
             'graphics_rating': 10,
@@ -36,8 +36,8 @@ def populate():
 
     reviews = [
         {
-            'user': UserProfile.objects.get(user__username='user1'),
-            'game': Game.objects.get(name='Game1'),
+            'user': 'user1'),
+            'game': 'user',
             'title': 'Review1',
             'pub_date': 'date',
             'comments': 'Review1 Comments',
@@ -51,6 +51,14 @@ def populate():
 
 
 #function to add new users
+
+    for user, user_date in users.items():
+    
+        U = add_user(users['username'], users['website'], users['picture'] 
+    
+    
+  
+    
 
 
 def add_user(user, website, picture):
