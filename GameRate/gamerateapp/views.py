@@ -190,7 +190,7 @@ def register(request):
         user_form = UserForm()
         profile_form = UserProfileForm()
        
-    return render(request, 'gamerateapp/register.html', context={'user_form': user_form, 'profile_form': profile_form, 'registered': registered})
+    return render(request, 'registration/registration_file.html', context={'user_form': user_form, 'profile_form': profile_form, 'registered': registered})
     
 def user_login(request):
     if request.method == 'POST':
