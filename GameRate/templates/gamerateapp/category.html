@@ -16,6 +16,7 @@
         <ul>
             {%for game in games%}
             <li><a href="{% url 'gamerateapp:show_game' game.slug %}">{{ game.name }}</a></li>
+			<li>{% game.picture %}</li>
             {% endfor %}
         </ul>
         {% else %}
