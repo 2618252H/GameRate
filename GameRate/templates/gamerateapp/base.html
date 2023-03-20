@@ -26,7 +26,7 @@
         <header>
             <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark p-0">
                 <img src="{% static 'images/GameRate.png' %}" alt="GameRate" width="30" height="24">
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <button class="navbar-toggler" id="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 
@@ -50,7 +50,10 @@
         <div class="container-fluid">
             <div class="row">
                 <nav class="col-md-2 d-none d-md-block bg-light sidebar">
-                    <div class="sidebar-sticky">
+					<div class="w-75 ml-3">
+						<input type="search" id="search-input" class="form-control ds-input" placeholder="Search..." />
+					</div>
+                    <div class="sidebar-sticky" id= "categories-listing">
                     {% block sidebar_block %}
                         {% get_category_list category %}
                     {% endblock %}
