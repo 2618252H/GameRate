@@ -27,10 +27,6 @@ from django.urls import reverse
 class MyRegistrationView(RegistrationView):
     def get_success_url(self, user):
         return reverse('gamerateapp:register_profile')
-class MyRegistrationView(RegistrationView):
-    def get_success_url(self, user):
-        return reverse('gamerateapp:register_profile')
->>>>>>> Stashed changes
 
 urlpatterns = [
     path('', views.index, name='index'),
