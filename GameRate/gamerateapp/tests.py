@@ -4,7 +4,9 @@ import warnings
 from django.test import TestCase
 from django.urls import reverse
 from django.conf import settings
+from django.db.models.query import QuerySet
 from gamerateapp.models import Category, Game, Review, UserProfile
+
 
 class projectStructureTests(TestCase):
     def setup(self):
@@ -24,6 +26,7 @@ class projectStructureTests(TestCase):
 
         self.assertTrue(directory_exists, "Directory Test Failed")
         self.assertTrue(is_python_package, "Directory Missing Files")
+
 
 class indexTests(TestCase):
     def setup(self):
@@ -61,6 +64,14 @@ class indexTests(TestCase):
         self.assertIn(expected_top_gameplay, self.content, "Couldn't find the markup for top gameplay")
         self.assertIn(expected_top_difficulty, self.content, "Couldn't find the markup for top difficulty")
 
+    def emptyIndexTitles(self):
+        self.assertEqual(type(self.response.context['top_publishers']), QuerySet, "The top_publishers variable in the context dictionary yields a QuerySet object")
+        self.assertEqual(len(self.response.context['top_publishers']), 0, "The top_publishers variable is not empty")
+
+        self.assertEqual(type(self.response.context['top_story']), QuerySet, "The top_story variable in the context dictionary yields a QuerySet object")
+        self.assertEqual(len(self.response.context['top_story']), 0, "The top_story variable is not empty")
+
+
 class categoryTests(TestCase):
     def setup(self):
         self.views_module = importlib.import_module('gamerateapp.views')
@@ -77,6 +88,7 @@ class categoryTests(TestCase):
         response = self.client.get(reverse('gamerateapp:category'))
 
         self.assertEqual(response.status_code, 200, "Requesting the category page failed")
+
 
 class modelTest(TestCase):
     def setup(self):
@@ -95,6 +107,7 @@ class modelTest(TestCase):
         self.assertEqual(review_py.story_rating, 5, "Tests on the Review model failed")
         self.assertEqual(review_py.graphics_rating, 8, "Tests on the Review model failed")
 
+
 class databaseTest(TestCase):
     def setup(self):
         pass
@@ -102,6 +115,20 @@ class databaseTest(TestCase):
     def database_variable_exists(self):
         self.assertTrue(settings.DATABASES, "Project's settings module does not have a DATABASES variable")
         self.assertTrue('default' in settings.DATABASES, "There is no 'default' database configuration in the project's DATABASES configuration variable")
+
+
+class formsTest(TestCase):
+    def game_form(self):
+        import gamerateapp.forms
+        self.assertTrue('GameForm' in dir(gamerateapp.forms), "game form not found")
+
+        from gamerateapp.forms import GameForm
+        game_form = GameForm()
+
+        self.assertEqual(type(game_form.__dict__['instance']), Game, "game form doesn't link to game model")
+
+        fields = game_form.fields
+        
 
 # class populationScriptTest(TestCase):
 #     def setup(self):
