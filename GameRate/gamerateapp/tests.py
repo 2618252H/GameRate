@@ -49,9 +49,17 @@ class indexTests(TestCase):
         expected_top_graphics = list(Game.objects.order_by('-gameplay_rating')[:1])
 
         self.assertTrue('top_gameplay' in self.response.context, "The 'top_gameplay' variable couldn't be found in the context dictionary for the index() view")
-        self.assertEquals()
+        self.assertEquals(expected_top_gameplay, self.response.context['top_gameplay'], "top_gameplay is not in the index view")
+        
         self.assertTrue('top_graphics' in self.response.context, "The 'top_graphics' variable couldn't be found in the context dictionary for the index() view")
+        self.assertEquals(expected_top_graphics, self.response.context['top_graphics'], "top_graphics is not in the index view")
+        
+    def responseTitles(self):
+        expected_top_gameplay = '<h2>Top in Gameplay</h2>'
+        expected_top_difficulty = '<h2>Top in Difficulty</h2>'
 
+        self.assertIn(expected_top_gameplay, self.content, "Couldn't find the markup for top gameplay")
+        self.assertIn(expected_top_difficulty, self.content, "Couldn't find the markup for top difficulty")
 
 class categoryTests(TestCase):
     def setup(self):
