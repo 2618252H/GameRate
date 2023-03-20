@@ -34,6 +34,10 @@ def categories(request):
 
     context_dict = {}
     
+    categories = Category.objects.all()
+    
+    context_dict[categories] = categories
+    
     for categeroy in Category.objects.all():
         context_dict[category.str()] = Game.objects.filter(category = category)[:1].picture 
     

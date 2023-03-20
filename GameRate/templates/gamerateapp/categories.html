@@ -11,10 +11,12 @@
     {% if categories %}
         <ul>
             {%for c in categories%}
-            <li><a href="{{% url 'gamerateapp:show_category' c.slug %}}">{{ c.name }}</a></li>
+            <li><a href="{% url 'gamerateapp:show_category' c.slug %}">{{ c.name }}</a></li>
             {% endfor %}
         </ul>
     {% else %}
         <strong>No categories present.</strong>
     {% endif %}
 </div>
+
+{% endblock %}
