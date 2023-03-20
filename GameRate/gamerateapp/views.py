@@ -34,6 +34,10 @@ def categories(request):
 
     context_dict = {}
     
+    categories = Category.objects.all()
+    
+    context_dict[categories] = categories
+    
     for categeroy in Category.objects.all():
         context_dict[category.str()] = Game.objects.filter(category = category)[:1].picture 
     
@@ -132,7 +136,7 @@ def profile(request, username):
     
     return render(request, 'gamerateapp/profile.html', context_dict)
     
-def publishers(request, username):
+def publishers(request):
     
     context_dict = {}
     
@@ -186,7 +190,7 @@ def register(request):
         user_form = UserForm()
         profile_form = UserProfileForm()
        
-    return render(request, 'gamerateapp/register.html', context={'user_form': user_form, 'profile_form': profile_form, 'registered': registered})
+    return render(request, 'registration/registration_file.html', context={'user_form': user_form, 'profile_form': profile_form, 'registered': registered})
     
 def user_login(request):
     if request.method == 'POST':
@@ -213,15 +217,21 @@ def user_logout(request):
     logout(request)
     return redirect(reverse('rango:index'))
 
-def get_category_list(max_results=0, starts_with=''):
+def get_search_list(max_results=0, starts_with=''):
     category_list = []
+    publisher_list = []
+    game_list = []
+    search_list = []
     if starts_with:
         category_list = Category.objects.filter(name__istartswith=starts_with)
+        publisher_list = Publisher.objects.filter(name__istartswith=starts_with)
+        game_list = Game.objects.filter(name__istartswith=starts_with)
+        search_list = category_list + publisher_list + game_list
         
     if max_results > 0:
-        if len(category_list) > max_results:
-            category_list = category_list[:max_results]
-    return category_list
+        if len(search_list) > max_results:
+            search_list = search_list[:max_results]
+    return search_list
 
 class CategorySuggestionView(View):
     def get(self, request):
@@ -230,9 +240,12 @@ class CategorySuggestionView(View):
         else:
             suggestion = ''
             
-        category_list = get_category_list(max_results=8, starts_with=suggestion)
+        search_list = get_search_list(max_results=8, starts_with=suggestion)
         
-        if len(category_list) == 0:
-            category_list = Category.objects.order_by('-likes')
+        if len(search_list) == 0:
+            category_list = Category.objects.order_by('-name')
+            publisher_list = Publisher.objects.order_by('profile.__Str__()')
+            game_list = Game.objects.order_by('-name')
+            search_list = category_list + publisher_list + game_list
             
-            return render(request, 'gamerateapp/categories.html', {'categories': category_list})
+            return render(request, 'gamerateapp/categories.html', {'categories': search_list})

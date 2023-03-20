@@ -16,9 +16,8 @@
         <ul>
         {% for game in top_gameplay %}
             <div class="card" style="width: 18rem;">
-                <!--<img src="{% game.picture %}" class="card-img-top" alt="...">-->
                 <div class="card-body">
-                    <p class="card-text"><li><a href="{% % url 'gamerateapp:show_game' game.slug % %}">{{ game.name }}</a></li></p>
+                    <p class="card-text"><li><a href="{% url 'gamerateapp:show_game' game.slug %}">{{ game.name }}</a></li></p>
                 </div>
             </div>
         {% endfor %}
@@ -37,7 +36,7 @@
             <div class="card" style="width: 18rem;">
                 <!--<img src="..." class="card-img-top" alt="...">-->
                 <div class="card-body">
-                    <p class="card-text"><li><a href="{% game.profile %}">{{ game.title }}</a></li></p>
+                    <p class="card-text"><li><a href="{% url 'gamerateapp:show_game' game.slug %}">{{ game.name }}</a></li></p>
                 </div>
             </div>
         {% endfor %}
@@ -56,7 +55,7 @@
             <div class="card" style="width: 18rem;">
                 <!--<img src="..." class="card-img-top" alt="...">-->
                 <div class="card-body">
-                    <p class="card-text"><li><a href="{% game.profile %}">{{ game.title }}</a></li></p>
+                    <p class="card-text"><li><a href="{% url 'gamerateapp:show_game' game.slug %}">{{ game.name }}</a></li></p>
                 </div>
             </div>
         {% endfor %}
@@ -75,7 +74,7 @@
             <div class="card" style="width: 18rem;">
                 <!--<img src="..." class="card-img-top" alt="...">-->
                 <div class="card-body">
-                    <p class="card-text"><li><a href="{% game.profile %}">{{ game.title }}</a></li></p>
+                    <p class="card-text"><li><a href="{% url 'gamerateapp:show_game' game.slug %}">{{ game.name }}</a></li></p>
                 </div>
             </div>
         {% endfor %}
@@ -95,7 +94,7 @@
             <div class="card" style="width: 18rem;">
                 <!--<img src="..." class="card-img-top" alt="...">-->
                 <div class="card-body">
-                    <p class="card-text"><li><a href="{{ game.profile }}">{{ publisher.name }}</a></li></a></li></p>
+                    <p class="card-text"><li><a href="{% url 'gamerateapp:show_game' game.slug %}">{{ game.name }}</a></li></p>
                 </div>
             </div>
         {% endfor %}

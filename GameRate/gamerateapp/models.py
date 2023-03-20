@@ -10,6 +10,7 @@ class UserProfile(models.Model):
     
     website = models.URLField(blank=True)
     picture = models.ImageField(upload_to='profile_images', blank=True)
+    slug = models.SlugField(unique=True)
     
     def __str__(self):
         return self.user.username
@@ -22,7 +23,7 @@ class Publisher(models.Model):
     picture = models.ImageField(upload_to='profile_images', blank=True)
     
     def __str__(self):
-        return self.profile.str()
+        return self.profile.__str__()
         
 class Category(models.Model):
     name = models.CharField(max_length=128, unique=True)
