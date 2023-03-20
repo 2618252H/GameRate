@@ -11,7 +11,7 @@
 
 {% block body_block %}
 	{% if game %}
-		<h1>{{% game.name %}}</h1>
+	<h1>{{% game.name %}}</h1>
 		<a href="{% url 'gamerateapp:profile' p.profile.slug %}">{{ p.profile.user }}</a>
 		<img src="{% game.picture %}" alt="{% game.name %}" />
 		<ul>
@@ -21,8 +21,22 @@
 			<li>Difficulty = {% game.difficulty_rating %}</li>
 		</ul>
 		<p> {% game.game_Description %} </p>
+		<a href="{% url 'gamerateapp:review' game.slug%}">Add Review</a>
 		{% if reviews %}
 		<ul>
-		{% for review in reviews %}
-
+			{% for review in reviews %}
+				<h2>{{review.title}}<h2>
+				<ul>
+					<li>Stroy = {% review.story_rating %}<li>
+					<li>Gameplay = {% review.gameplay_rating %}</li>
+					<li>Graphics = {% reviewgraphics_rating %}</li>
+					<li>Difficulty = {% review.difficulty_rating %}</li>
+				</ul>
+				<p>{review.comments}</p>
+		{%else%}
+		        <strong>No reviews currently for this game.</strong>
+		{% end if %}
+		{% else %}
+			That specific game dose nto exist.
+		{% end if %}
 {% endblock %}
