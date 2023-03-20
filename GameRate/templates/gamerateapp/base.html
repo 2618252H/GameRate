@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 
 {% load staticfiles %}
-{% load rango_template_tags %}
 
 <html lang="en">
     <head>
+        <!-- Bootstrap Author Credits -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
@@ -25,8 +25,8 @@
     <body>
         <header>
             <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark p-0">
-                <img src="{% static 'images/GameRate.png' %}" alt="GameRate" width="30" height="24">
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <img src="{% static 'images/GameRate.png' %}" alt="GameRate" width="200" height="70">
+                <button class="navbar-toggler" id="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 
@@ -36,10 +36,10 @@
                         <li class="nav-item "><a class="nav-link" href="{% url 'gamerateapp:categories' %}">Categories</a></li>
                         <li class="nav-item "><a class="nav-link" href="{% url 'gamerateapp:publishers' %}">Publishers</a></li>
                         {% if user.is_authenticated %}
-                            <li class="nav-item "><a class="nav-link" href="{% url 'gamerateapp:profile' %}">Profile</a></li>
+                        <li class="nav-item "><a class="nav-link" href="{% url 'gamerateapp:profile' user.username %}">Profile</a></li>
                             <li class="nav-item"><a class="nav-link" href="{% url 'auth_logout' %}?next=/gamerateapp/">Logout</a></li>
                         {% else %}
-                        <li class="nav-item"><a class="nav-link" href="{% url 'registration_register' %}">Sign Up</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'gamerateapp:register' %}">Sign Up</a></li>
                         <li class="nav-item "><a class="nav-link" href="{% url 'auth_login' %}">Login</a></li>
                         {% endif %}
                     </ul>
@@ -49,15 +49,17 @@
         
         <div class="container-fluid">
             <div class="row">
-                <nav class="col-md-2 d-none d-md-block bg-light sidebar">
-                    <div class="sidebar-sticky">
+                <nav class="col-md-2 d-none d-md-block bg-light sidebar mt-5">
+					<div class="w-75 ml-3">
+						<input type="search" id="search-input" class="form-control ds-input" placeholder="Search..." />
+					</div>
+                    <div class="sidebar-sticky" id= "categories-listing">
                     {% block sidebar_block %}
-                        {% get_category_list category %}
                     {% endblock %}
                     </div>
                 </nav>
                 
-                <main role="main" class="col-md-9  ml-sm-auto col-lg-10 px-4">		
+                <main role="main" class="col-md-9  ml-sm-auto col-lg-10 px-4 mt-5">		
                     {% block body_block %}{% endblock %}
                     
                     <!-- FOOTER -->
@@ -68,10 +70,12 @@
                 </main>
             </div>
         </div>
+
         
         <!-- Bootstrap core JavaScript -->
         <!-- Placed at the end of the document so the pages load faster -->
-        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="{% static "js/jquery-3.3.1.min.js" %}"  integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+		<script src="{% static "js/gamerate-jquery.js" %}" crossorigin="anonymous"></script>
         <script>window.jQuery || document.write('<script src="https://getbootstrap.com/docs/4.2/assets/js/vendor/jquery-slim.min.js"><\/script>')</script><script src="https://getbootstrap.com/docs/4.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-zDnhMsjVZfS3hiP7oCBRmfjkQC4fzxVxFhBx8Hkz2aZX8gEvA/jsP3eXRCvzTofP" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.9.0/feather.min.js"></script>
         <script src="https://getbootstrap.com/docs/4.2/examples/dashboard/dashboard.js"></script>

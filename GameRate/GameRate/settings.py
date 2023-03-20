@@ -16,7 +16,7 @@ import os
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 TEMPLATE_DIR = os.path.join(BASE_DIR, 'templates')
 STATIC_DIR = os.path.join(BASE_DIR, 'static')
-
+MEDIA_DIR = os.path.join(BASE_DIR, 'media')
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
@@ -66,10 +66,13 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.media',
             ],
         },
     },
 ]
+
+STATICFILES_DIRS = [STATIC_DIR, ]
 
 WSGI_APPLICATION = 'GameRate.wsgi.application'
 
@@ -140,3 +143,5 @@ LOGIN_REDIRECT_URL = 'gamerateapp:index'
 # This was set in a previous chapter. The registration package uses this, too.
 LOGIN_URL = 'auth_login'
 
+MEDIA_ROOT = MEDIA_DIR
+MEDIA_URL = '/media/'
