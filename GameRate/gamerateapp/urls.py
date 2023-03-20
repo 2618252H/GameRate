@@ -5,8 +5,6 @@ app_name = 'gamerateapp'
 
 urlpatterns = [
 	path('', views.index, name='index'),
-<<<<<<< Updated upstream
-=======
     path('categories/', views.categories, name='categories'),
     path('category/<slug:category_name_slug>/', views.category, name="category"),
     path('game/<slug:game_name_slug>/', views.game, name="game"),
@@ -19,10 +17,6 @@ urlpatterns = [
     path('suggest/', views.CategorySuggestionView.as_view(), name='suggest'),
     path('register_profile/', views.register_profile, name='register_profile'),
     path('profile/<username>/', views.ProfileView.as_view(), name='profile'),
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
 ]
 
 
