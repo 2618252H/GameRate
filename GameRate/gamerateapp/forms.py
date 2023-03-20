@@ -1,5 +1,5 @@
 from django import forms
-from gamerateapp.models import UserProfile, Publisher
+from gamerateapp.models import UserProfile, Publisher, Game, Review
 from django.contrib.auth.models import User
 
 class UserForm(forms.ModelForm):
@@ -15,8 +15,21 @@ class UserProfileForm(forms.ModelForm):
         fields = ('website', 'picture',)
 
 class PublisherForm(forms.ModelForm):
+    
     class Meta:
         model = Publisher
-        fields = ('website', 'picture',)
+        fields = ('website','profile', 'picture',)
 
+class GameForm(forms.ModelForm):
+    name = forms.CharField(max_length=128, help_text= "What is the name of the game?")
+    publisher = forms.CharField(max_length=128, help_text= "What is the name of the publisher?")
+    
+    class Meta:
+        model = Game
+        fields = ('name', 'picture', 'publisher', 'game_Description')
 
+class ReviewForm(forms.ModelForm):
+    class Meta:
+        model = Review
+        fields = ('title', 'comments', 'story_rating', 'gameplay_rating', 
+                  'graphics_rating', 'difficulty_rating')
