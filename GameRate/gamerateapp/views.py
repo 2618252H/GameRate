@@ -136,7 +136,7 @@ def profile(request, username):
     
     return render(request, 'gamerateapp/profile.html', context_dict)
     
-def publishers(request, username):
+def publishers(request):
     
     context_dict = {}
     
