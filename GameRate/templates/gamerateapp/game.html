@@ -12,10 +12,11 @@
 {% block body_block %}
 	{% if game %}
 	<h1>{{ game.name }}</h1>
-		<a href="{% url 'gamerateapp:profile' p.profile.slug %}">{{ p.profile.user }}</a>
+	<p>Publisher</p>
+		<a href="{% url 'gamerateapp:profile' game.publisher.profile %}">{{ game.publisher.profile.username }}</a><br>
 		<img src="{{ game.picture }}" alt="{{ game.name }}" />
 		<ul>
-			<li>Stroy = {{ game.story_rating }}<li>
+			<li>Stroy = {{ game.story_rating }}</li>
 			<li>Gameplay = {{ game.gameplay_rating }}</li>
 			<li>Graphics = {{ game.graphics_rating }}</li>
 			<li>Difficulty = {{ game.difficulty_rating }}</li>

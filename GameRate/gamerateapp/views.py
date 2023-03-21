@@ -29,6 +29,7 @@ def index(request):
     context_dict['top_story'] = top_story
     context_dict['top_difficulty'] = top_difficulty
     
+    
     response = render(request, 'gamerateapp/index.html', context=context_dict)
     
     return response
@@ -71,7 +72,7 @@ def game(request, game_name_slug):
 
     try:
         game = Game.objects.get(slug=game_name_slug)
-        reviews = Review.objects.order_by(game = game)
+        reviews = Review.objects.filter(game = game)
         
         context_dict['game'] = game
         context_dict['reviews'] = reviews
