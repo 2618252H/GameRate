@@ -59,7 +59,6 @@ class Review(models.Model):
     user = models.ForeignKey(UserProfile, on_delete = models.CASCADE)
     game = models.ForeignKey(Game, on_delete = models.CASCADE)
     title = models.CharField(max_length=128)
-    pub_date = models.DateTimeField('date published')
     comments = models.CharField(max_length=128)
     story_rating = models.IntegerField(default = 0)
     gameplay_rating = models.IntegerField(default = 0)
