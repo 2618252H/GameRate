@@ -25,9 +25,9 @@ def populate():
     games = [
         {
             'name': 'Game1',
-            'publisher': 'publisher1'),
+            'publisher': 'publisher1',
             'game_Description': 'Game1 Description',
-            'category': 'action'),
+            'category': 'action',
             'story_rating': 10,
             'gameplay_rating': 10,
             'graphics_rating': 10,
@@ -36,7 +36,7 @@ def populate():
 
     reviews = [
         {
-            'user': 'user1'),
+            'user': 'user1',
             'game': 'user',
             'title': 'Review1',
             'pub_date': 'date',

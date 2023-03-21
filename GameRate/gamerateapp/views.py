@@ -8,7 +8,7 @@ from django.contrib.auth import logout, authenticate, login
 from gamerateapp.forms import ReviewForm
 from django.urls import reverse
 from django.shortcuts import redirect
-from gamerateapp.forms import UserForm, UserProfileForm, GameForm
+from gamerateapp.forms import UserForm, UserProfileForm, GameForm, PublisherForm
 from django.views import View
 from django.contrib.auth.models import User
 from gamerateapp.models import UserProfile
@@ -39,11 +39,7 @@ def categories(request):
     
     categories = Category.objects.all()
     
-    context_dict[categories] = categories
-    
-    for categeroy in Category.objects.all():
-        context_dict[category.str()] = Game.objects.filter(category = category)[:1].picture 
-    
+    context_dict['categories'] = categories
 
     response = render(request, 'gamerateapp/categories.html', context=context_dict)
     
@@ -131,6 +127,21 @@ def register_profile(request):
     context_dict = {'form': form}
     return render(request, 'gamerateapp/profile_registration.html', context_dict)
     
+def register_publisher(request):
+    form = PublisherForm()
+    if request.method == 'POST':
+        form = PublisherForm(request.POST, request.FILES)
+        if form.is_valid():
+            publisher_profile = form.save(commit=False)
+            publisher_profile.profile = request.user
+            publisher_profile.save()
+            return redirect(reverse('gamerateapp:index'))
+        else:
+            print(form.errors)
+    context_dict = {'form':form}
+    return render(request, 'gamerateapp/publisher_registration.html', context_dict)
+    
+    
 def publishers(request):
     
     context_dict = {}
@@ -198,6 +209,8 @@ class ProfileView(View):
             return None
         user_profile = UserProfile.objects.get_or_create(user=user)[0]
         form = UserProfileForm({'website': user_profile.website, 'picture': user_profile.picture})
+
+            
         return (user, user_profile, form)
 
     @method_decorator(login_required)
@@ -206,7 +219,13 @@ class ProfileView(View):
             (user, user_profile, form) = self.get_user_details(username)
         except TypeError:
             return redirect(reverse('gamerateapp:index'))
-        context_dict = {'user_profile': user_profile,'selected_user': user,'form': form}
+            
+        try:
+            publisher = Publisher.objects.get(profile = user)
+        except Publisher.DoesNotExist:
+            publisher = None
+            
+        context_dict = {'user_profile': user_profile,'selected_user': user,'form': form, 'publisher':publisher}
         return render(request, 'gamerateapp/profile.html', context_dict)
 
     @method_decorator(login_required)

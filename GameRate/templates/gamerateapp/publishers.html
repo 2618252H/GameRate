@@ -11,7 +11,7 @@
     {% if publishers %}
         <ul>
             {%for p in publishers%}
-            <li><a href="{% url 'gamerateapp:profile' p.profile.slug %}">{{ p.profile.user }}</a></li>
+            <li><a href="{% url 'gamerateapp:profile' p.profile %}">{{ p.profile.username }}</a></li>
             {% endfor %}
         </ul>
     {% else %}
