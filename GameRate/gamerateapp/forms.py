@@ -22,11 +22,10 @@ class PublisherForm(forms.ModelForm):
 
 class GameForm(forms.ModelForm):
     name = forms.CharField(max_length=128, help_text= "What is the name of the game?")
-    publisher = forms.CharField(max_length=128, help_text= "What is the name of the publisher?")
     
     class Meta:
         model = Game
-        fields = ('name', 'picture', 'publisher', 'game_Description')
+        fields = ('name', 'picture', 'publisher','category', 'game_Description')
 
 class ReviewForm(forms.ModelForm):
     class Meta:
