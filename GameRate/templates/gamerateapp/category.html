@@ -16,7 +16,7 @@
         <ul>
             {%for game in games%}
             <li><a href="{% url 'gamerateapp:show_game' game.slug %}">{{ game.name }}</a></li>
-			<li><img src="{% game.picture %}" alt="{% game.name %}" /></li>
+			<li><img src="{{MEDIA_URL}}{{game.picture }}" alt="{{ game.name }}" /></li>
             {% endfor %}
         </ul>
         {% else %}

@@ -28,4 +28,9 @@ Profile for {{ selected_user.username }}
         </div>
     </div>
 </div>
+{% if publisher %}
+<a href="{% url 'gamerateapp:add_game' %}">Add Game</a>
+{% else %}
+<a href="{% url 'gamerateapp:register_publisher' %}">Become a Publisher</a>
+{% endif %}
 {% endblock %}
