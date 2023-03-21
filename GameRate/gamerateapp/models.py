@@ -28,9 +28,6 @@ class Category(models.Model):
     name = models.CharField(max_length=128, unique=True)
     slug = models.SlugField(unique=True)
     
-    def save(self, *args, **kwargs):
-        self.slug = slugify(self.name)
-        super(Game, self).save(*args, **kwargs)
     
     def __str__(self):
         return self.name
@@ -62,7 +59,6 @@ class Review(models.Model):
     user = models.ForeignKey(UserProfile, on_delete = models.CASCADE)
     game = models.ForeignKey(Game, on_delete = models.CASCADE)
     title = models.CharField(max_length=128)
-    pub_date = models.DateTimeField('date published')
     comments = models.CharField(max_length=128)
     story_rating = models.IntegerField(default = 0)
     gameplay_rating = models.IntegerField(default = 0)
