@@ -14,7 +14,7 @@
 	<h1>{{ game.name }}</h1>
 	<p>Publisher</p>
 		<a href="{% url 'gamerateapp:profile' game.publisher.profile %}">{{ game.publisher.profile.username }}</a><br>
-		<img src="{{ game.picture }}" alt="{{ game.name }}" />
+		<img src="{{MEDIA_URL}}{{ game.picture }}" alt="{{ game.name }}" />
 		<ul>
 			<li>Stroy = {{ game.story_rating }}</li>
 			<li>Gameplay = {{ game.gameplay_rating }}</li>

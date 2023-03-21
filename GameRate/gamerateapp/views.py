@@ -162,7 +162,11 @@ def add_game(request):
         form = GameForm(request.POST)
         
         if form.is_valid():
-            form.save(commit=True)
+            game = form.save(commit=True)
+            
+            if 'picture' in request.FILES:
+                game.picture = request.FILES['picture']
+                
             return redirect('/gamerateapp/')
         else:
             print(form.errors)
@@ -241,7 +245,12 @@ class ProfileView(View):
             return redirect('gamerateapp:profile', user.username)
         else:
             print(form.errors)
-        
-        context_dict = {'user_profile': user_profile,'selected_user': user,'form': form}
+            
+        try:
+            publisher = Publisher.objects.get(profile = user)
+        except Publisher.DoesNotExist:
+            publisher = None
+            
+        context_dict = {'user_profile': user_profile,'selected_user': user,'form': form, 'publisher':publisher}
     
         return render(request, 'gamerateapp/profile.html', context_dict)
