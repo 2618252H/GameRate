@@ -16,19 +16,20 @@
 		<a href="{% url 'gamerateapp:profile' game.publisher.profile %}">{{ game.publisher.profile.username }}</a><br>
 		<img src="{{MEDIA_URL}}{{ game.picture }}" alt="{{ game.name }}" />
 		<ul>
-			<li>Stroy = {{ game.story_rating }}</li>
+			<li>Story = {{ game.story_rating }}</li>
 			<li>Gameplay = {{ game.gameplay_rating }}</li>
 			<li>Graphics = {{ game.graphics_rating }}</li>
 			<li>Difficulty = {{ game.difficulty_rating }}</li>
 		</ul>
 		<p> {{ game.game_Description }} </p>
-		<a href="{% url 'gamerateapp:review' game.slug%}">Add Review</a>
+		<a href="{% url 'gamerateapp:add_review'%}">Add Review</a>
 		{% if reviews %}
 		<ul>
 			{% for review in reviews %}
-				<h2>{{review.title}}<h2>
+			<a href="{% url 'gamerateapp:profile' review.user %}">{{review.user}}</a>
+				<p>{{review.title}}<p>
 				<ul>
-					<li>Stroy = {{ review.story_rating }}<li>
+					<li>Story = {{ review.story_rating }}</li>
 					<li>Gameplay = {{ review.gameplay_rating }}</li>
 					<li>Graphics = {{ reviewgraphics_rating }}</li>
 					<li>Difficulty = {{ review.difficulty_rating }}</li>
