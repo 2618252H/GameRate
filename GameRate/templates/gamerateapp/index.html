@@ -18,6 +18,7 @@
             <div class="card" style="width: 18rem;">
                 <div class="card-body">
                     <p class="card-text"><li><a href="{% url 'gamerateapp:game' game.slug %}">{{ game.name }}</a></li></p>
+					<p>{{ game.gameplay_rating }}</p>
 					<a href="{% url 'gamerateapp:profile' game.publisher.profile %}">{{ game.publisher.profile.username }}</a><br>
 					<img src="{{MEDIA_URL}}{{game.picture }}" width="300" height="300" alt="{{ game.name }}" />
                 </div>
