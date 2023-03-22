@@ -18,7 +18,8 @@
             <div class="card" style="width: 18rem;">
                 <div class="card-body">
                     <p class="card-text"><li><a href="{% url 'gamerateapp:game' game.slug %}">{{ game.name }}</a></li></p>
-					<p>{{ game.gameplay_rating }}</p>
+					<p>Average gameplay rating of {{ game.gameplay_rating }}</p>
+					<p>Publisher</p>
 					<a href="{% url 'gamerateapp:profile' game.publisher.profile %}">{{ game.publisher.profile.username }}</a><br>
 					<img src="{{MEDIA_URL}}{{game.picture }}" width="300" height="300" alt="{{ game.name }}" />
                 </div>
@@ -40,6 +41,8 @@
                 <!--<img src="..." class="card-img-top" alt="...">-->
                 <div class="card-body">
                     <p class="card-text"><li><a href="{% url 'gamerateapp:game' game.slug %}">{{ game.name }}</a></li></p>
+					<p>Average graphics rating of {{ game.graphics_rating }}</p>
+					<p>Publisher</p>
 					<a href="{% url 'gamerateapp:profile' game.publisher.profile %}">{{ game.publisher.profile.username }}</a><br>
 					<img src="{{MEDIA_URL}}{{game.picture }}" width="300" height="300" alt="{{ game.name }}" />
                 </div>
@@ -61,6 +64,8 @@
                 <!--<img src="..." class="card-img-top" alt="...">-->
                 <div class="card-body">
                     <p class="card-text"><li><a href="{% url 'gamerateapp:game' game.slug %}">{{ game.name }}</a></li></p>
+					<p>Average story rating of {{ game.story_rating }}</p>
+					<p>Publisher</p>
 					<a href="{% url 'gamerateapp:profile' game.publisher.profile %}">{{ game.publisher.profile.username }}</a><br>
 					<img src="{{MEDIA_URL}}{{game.picture }}" width="300" height="300" alt="{{ game.name }}" />
                 </div>
@@ -82,6 +87,8 @@
                 <!--<img src="..." class="card-img-top" alt="...">-->
                 <div class="card-body">
                     <p class="card-text"><li><a href="{% url 'gamerateapp:game' game.slug %}">{{ game.name }}</a></li></p>
+					<p>Average difficulty rating of {{ game.difficulty_rating }}</p>
+					<p>Publisher</p>
 					<a href="{% url 'gamerateapp:profile' game.publisher.profile %}">{{ game.publisher.profile.username }}</a><br>
 					<img src="{{MEDIA_URL}}{{game.picture }}" width="300" height="300" alt="{{ game.name }}" />
                 </div>

@@ -27,15 +27,17 @@ Profile for {{ selected_user.username }}
 	{% if selected_user == user %}
 	<a href="{% url 'gamerateapp:add_game' %}">Add Game</a>
 	{% endif %}
-	<ul>
-	{% for game in games %}
-		<li><a href="{% url 'gamerateapp:game' game.slug %}">{{ game.name }}</a></li>
-		<li><img src="{{game.picture }}" alt="{{ game.name }}" /></li>
-    {% endfor %}
-	</ul>
 {% else %}
 <a href="{% url 'gamerateapp:register_publisher' %}">Become a Publisher</a>
 {% endif %}
+<h2>Games</h2>
+<ul>
+	{% for game in games %}
+		<li><a href="{% url 'gamerateapp:game' game.slug %}">{{ game.name }}</a></li>
+		<img src="{{MEDIA_URL}}{{game.picture }}" width="300" height="300" alt="{{ game.name }}" />
+    {% endfor %}
+</ul>
+<h2>Reviews</h2>
 {% for review in reviews %}
 		<li><a href="{% url 'gamerateapp:game' review.game.slug %}">{{ review.game.name }}</a></li>
 		<p>{{review.title}}<p>
