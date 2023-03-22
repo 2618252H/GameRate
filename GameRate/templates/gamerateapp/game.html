@@ -12,28 +12,32 @@
 {% block body_block %}
 	{% if game %}
 	<h1>{{ game.name }}</h1>
-	<p>Publisher</p>
+	<h3>Publisher</h3>
 		<a href="{% url 'gamerateapp:profile' game.publisher.profile %}">{{ game.publisher.profile.username }}</a><br>
 		<img src="{{MEDIA_URL}}{{ game.picture }}" width="300" height="300" alt="{{ game.name }} image" />
+		<h2>Average Ratings</h2>
 		<ul>
 			<li>Story = {{ game.story_rating }}</li>
 			<li>Gameplay = {{ game.gameplay_rating }}</li>
 			<li>Graphics = {{ game.graphics_rating }}</li>
 			<li>Difficulty = {{ game.difficulty_rating }}</li>
 		</ul>
+		<h2>Game Description</h2>
 		<p> {{ game.game_Description }} </p>
 		<a href="/gamerateapp/game/{{game.slug }}/add_review/">Add Review</a>
 		{% if reviews %}
+		<h2>Reviews</h2>
 		<ul>
 			{% for review in reviews %}
+			<p>{{review.title}}<p>
 			<a href="{% url 'gamerateapp:profile' review.user %}">{{review.user}}</a>
-				<p>{{review.title}}<p>
 				<ul>
 					<li>Story = {{ review.story_rating }}</li>
 					<li>Gameplay = {{ review.gameplay_rating }}</li>
 					<li>Graphics = {{ review.graphics_rating }}</li>
 					<li>Difficulty = {{ review.difficulty_rating }}</li>
 				</ul>
+				<p>Comments:</p>
 				<p>{{review.comments}}</p>
 			{% endfor %}
 		</ul>
