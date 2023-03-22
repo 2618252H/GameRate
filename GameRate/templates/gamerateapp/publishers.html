@@ -8,10 +8,11 @@
 {% block body_block %}
 
 <div>
+<h1>Publisher</h1>
     {% if publishers %}
         <ul>
             {%for p in publishers%}
-            <li><a href="{% url 'gamerateapp:profile' p.profile.slug %}">{{ p.profile.user }}</a></li>
+            <li><a href="{% url 'gamerateapp:profile' p.profile %}">{{ p.profile.username }}</a></li>
             {% endfor %}
         </ul>
     {% else %}

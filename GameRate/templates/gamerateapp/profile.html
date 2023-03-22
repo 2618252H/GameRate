@@ -19,13 +19,34 @@ Profile for {{ selected_user.username }}
         <div>
             {% if selected_user == user %}
                 <form method="post" action="." enctype="multipart/form-data">{% csrf_token %}{{ form.as_p }}<input type="submit" value="Update" /></form>
-            {% else %}
-                <p>
-                <strong>Website:</strong>
-                <a href="{{ user_profile.website }}">{{ user_profile.website }}</a>
-                </p>
             {% endif %}
         </div>
     </div>
 </div>
+{% if publisher %}
+	{% if selected_user == user %}
+	<a href="{% url 'gamerateapp:add_game' %}">Add Game</a>
+	{% endif %}
+{% else %}
+<a href="{% url 'gamerateapp:register_publisher' %}">Become a Publisher</a>
+{% endif %}
+<h2>Games</h2>
+<ul>
+	{% for game in games %}
+		<li><a href="{% url 'gamerateapp:game' game.slug %}">{{ game.name }}</a></li>
+		<img src="{{MEDIA_URL}}{{game.picture }}" width="300" height="300" alt="{{ game.name }}" />
+    {% endfor %}
+</ul>
+<h2>Reviews</h2>
+{% for review in reviews %}
+		<li><a href="{% url 'gamerateapp:game' review.game.slug %}">{{ review.game.name }}</a></li>
+		<p>{{review.title}}<p>
+		<ul>
+			<li>Story = {{ review.story_rating }}</li>
+			<li>Gameplay = {{ review.gameplay_rating }}</li>
+			<li>Graphics = {{ review.graphics_rating }}</li>
+			<li>Difficulty = {{ review.difficulty_rating }}</li>
+		</ul>
+		<p>{{review.comments}}</p>
+	{% endfor %}
 {% endblock %}

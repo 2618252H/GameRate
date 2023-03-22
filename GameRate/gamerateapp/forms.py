@@ -12,7 +12,7 @@ class UserForm(forms.ModelForm):
 class UserProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
-        fields = ('website', 'picture',)
+        fields = ('picture',)
 
 class PublisherForm(forms.ModelForm):
     
@@ -22,14 +22,13 @@ class PublisherForm(forms.ModelForm):
 
 class GameForm(forms.ModelForm):
     name = forms.CharField(max_length=128, help_text= "What is the name of the game?")
-    publisher = forms.CharField(max_length=128, help_text= "What is the name of the publisher?")
     
     class Meta:
         model = Game
-        fields = ('name', 'picture', 'publisher', 'game_Description')
+        fields = ('name', 'picture', 'publisher','category', 'game_Description')
 
 class ReviewForm(forms.ModelForm):
     class Meta:
         model = Review
-        fields = ('title', 'comments', 'story_rating', 'gameplay_rating', 
+        fields = ('user','title', 'comments', 'story_rating', 'gameplay_rating', 
                   'graphics_rating', 'difficulty_rating')

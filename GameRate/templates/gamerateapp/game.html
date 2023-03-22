@@ -11,32 +11,40 @@
 
 {% block body_block %}
 	{% if game %}
-	<h1>{{% game.name %}}</h1>
-		<a href="{% url 'gamerateapp:profile' p.profile.slug %}">{{ p.profile.user }}</a>
-		<img src="{% game.picture %}" alt="{% game.name %}" />
+	<h1>{{ game.name }}</h1>
+	<h3>Publisher</h3>
+		<a href="{% url 'gamerateapp:profile' game.publisher.profile %}">{{ game.publisher.profile.username }}</a><br>
+		<img src="{{MEDIA_URL}}{{ game.picture }}" width="300" height="300" alt="{{ game.name }} image" />
+		<h2>Average Ratings</h2>
 		<ul>
-			<li>Stroy = {% game.story_rating %}<li>
-			<li>Gameplay = {% game.gameplay_rating %}</li>
-			<li>Graphics = {% game.graphics_rating %}</li>
-			<li>Difficulty = {% game.difficulty_rating %}</li>
+			<li>Story = {{ game.story_rating }}</li>
+			<li>Gameplay = {{ game.gameplay_rating }}</li>
+			<li>Graphics = {{ game.graphics_rating }}</li>
+			<li>Difficulty = {{ game.difficulty_rating }}</li>
 		</ul>
-		<p> {% game.game_Description %} </p>
-		<a href="{% url 'gamerateapp:review' game.slug%}">Add Review</a>
+		<h2>Game Description</h2>
+		<p> {{ game.game_Description }} </p>
+		<a href="/gamerateapp/game/{{game.slug }}/add_review/">Add Review</a>
 		{% if reviews %}
+		<h2>Reviews</h2>
 		<ul>
 			{% for review in reviews %}
-				<h2>{{review.title}}<h2>
+			<p>{{review.title}}<p>
+			<a href="{% url 'gamerateapp:profile' review.user %}">{{review.user}}</a>
 				<ul>
-					<li>Stroy = {% review.story_rating %}<li>
-					<li>Gameplay = {% review.gameplay_rating %}</li>
-					<li>Graphics = {% reviewgraphics_rating %}</li>
-					<li>Difficulty = {% review.difficulty_rating %}</li>
+					<li>Story = {{ review.story_rating }}</li>
+					<li>Gameplay = {{ review.gameplay_rating }}</li>
+					<li>Graphics = {{ review.graphics_rating }}</li>
+					<li>Difficulty = {{ review.difficulty_rating }}</li>
 				</ul>
-				<p>{review.comments}</p>
-		{%else%}
-		        <strong>No reviews currently for this game.</strong>
-		{% end if %}
+				<p>Comments:</p>
+				<p>{{review.comments}}</p>
+			{% endfor %}
+		</ul>
 		{% else %}
-			That specific game dose nto exist.
-		{% end if %}
+		        <strong>No reviews currently for this game.</strong>
+		{% endif %}
+	{% else %}
+			That specific game dose not exist.
+	{% endif %}
 {% endblock %}
