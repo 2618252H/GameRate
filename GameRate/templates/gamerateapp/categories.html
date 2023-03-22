@@ -8,10 +8,11 @@
 {% block body_block %}
 
 <div>
+<h1>Categories</h1>
     {% if categories %}
         <ul>
             {%for c in categories%}
-            <li><a href="{% url 'gamerateapp:show_category' c.slug %}">{{ c.name }}</a></li>
+            <li><a href="{% url 'gamerateapp:category' c.slug %}">{{ c.name }}</a></li>
             {% endfor %}
         </ul>
     {% else %}

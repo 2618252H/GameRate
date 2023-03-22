@@ -17,7 +17,11 @@
         {% for game in top_gameplay %}
             <div class="card" style="width: 18rem;">
                 <div class="card-body">
-                    <p class="card-text"><li><a href="{% url 'gamerateapp:show_game' game.slug %}">{{ game.name }}</a></li></p>
+                    <p class="card-text"><li><a href="{% url 'gamerateapp:game' game.slug %}">{{ game.name }}</a></li></p>
+					<p>Average gameplay rating of {{ game.gameplay_rating }}</p>
+					<p>Publisher</p>
+					<a href="{% url 'gamerateapp:profile' game.publisher.profile %}">{{ game.publisher.profile.username }}</a><br>
+					<img src="{{MEDIA_URL}}{{game.picture }}" width="300" height="300" alt="{{ game.name }}" />
                 </div>
             </div>
         {% endfor %}
@@ -36,7 +40,11 @@
             <div class="card" style="width: 18rem;">
                 <!--<img src="..." class="card-img-top" alt="...">-->
                 <div class="card-body">
-                    <p class="card-text"><li><a href="{% url 'gamerateapp:show_game' game.slug %}">{{ game.name }}</a></li></p>
+                    <p class="card-text"><li><a href="{% url 'gamerateapp:game' game.slug %}">{{ game.name }}</a></li></p>
+					<p>Average graphics rating of {{ game.graphics_rating }}</p>
+					<p>Publisher</p>
+					<a href="{% url 'gamerateapp:profile' game.publisher.profile %}">{{ game.publisher.profile.username }}</a><br>
+					<img src="{{MEDIA_URL}}{{game.picture }}" width="300" height="300" alt="{{ game.name }}" />
                 </div>
             </div>
         {% endfor %}
@@ -55,7 +63,11 @@
             <div class="card" style="width: 18rem;">
                 <!--<img src="..." class="card-img-top" alt="...">-->
                 <div class="card-body">
-                    <p class="card-text"><li><a href="{% url 'gamerateapp:show_game' game.slug %}">{{ game.name }}</a></li></p>
+                    <p class="card-text"><li><a href="{% url 'gamerateapp:game' game.slug %}">{{ game.name }}</a></li></p>
+					<p>Average story rating of {{ game.story_rating }}</p>
+					<p>Publisher</p>
+					<a href="{% url 'gamerateapp:profile' game.publisher.profile %}">{{ game.publisher.profile.username }}</a><br>
+					<img src="{{MEDIA_URL}}{{game.picture }}" width="300" height="300" alt="{{ game.name }}" />
                 </div>
             </div>
         {% endfor %}
@@ -74,7 +86,11 @@
             <div class="card" style="width: 18rem;">
                 <!--<img src="..." class="card-img-top" alt="...">-->
                 <div class="card-body">
-                    <p class="card-text"><li><a href="{% url 'gamerateapp:show_game' game.slug %}">{{ game.name }}</a></li></p>
+                    <p class="card-text"><li><a href="{% url 'gamerateapp:game' game.slug %}">{{ game.name }}</a></li></p>
+					<p>Average difficulty rating of {{ game.difficulty_rating }}</p>
+					<p>Publisher</p>
+					<a href="{% url 'gamerateapp:profile' game.publisher.profile %}">{{ game.publisher.profile.username }}</a><br>
+					<img src="{{MEDIA_URL}}{{game.picture }}" width="300" height="300" alt="{{ game.name }}" />
                 </div>
             </div>
         {% endfor %}
@@ -84,25 +100,4 @@
     {% endif %}
     </div>
 </div>
-
-<div>
-    <h2>Top Publishers</h2>
-    <div class="row row-cols-1 row-cols-md-3 g-4">
-    {% if top_publishers %}
-        <ul>
-        {% for publisher in top_publishers %}
-            <div class="card" style="width: 18rem;">
-                <!--<img src="..." class="card-img-top" alt="...">-->
-                <div class="card-body">
-                    <p class="card-text"><li><a href="{% url 'gamerateapp:show_game' game.slug %}">{{ game.name }}</a></li></p>
-                </div>
-            </div>
-        {% endfor %}
-        </ul>
-    {% else %}
-        <strong>No top publishers yet!</strong>
-    {% endif %}
-    </div>
-</div>
-
 {% endblock %}
