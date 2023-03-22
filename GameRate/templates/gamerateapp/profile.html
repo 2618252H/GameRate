@@ -19,11 +19,6 @@ Profile for {{ selected_user.username }}
         <div>
             {% if selected_user == user %}
                 <form method="post" action="." enctype="multipart/form-data">{% csrf_token %}{{ form.as_p }}<input type="submit" value="Update" /></form>
-            {% else %}
-                <p>
-                <strong>Website:</strong>
-                <a href="{{ user_profile.website }}">{{ user_profile.website }}</a>
-                </p>
             {% endif %}
         </div>
     </div>
