@@ -1,6 +1,7 @@
 from django.db import models
 from django.template.defaultfilters import slugify
 from django.contrib.auth.models import User
+from django.core.validators import MaxValueValidator, MinValueValidator
 
 # Create your models here.
 
@@ -35,10 +36,10 @@ class Game(models.Model):
     publisher = models.ForeignKey(Publisher, on_delete=models.CASCADE)
     game_Description = models.CharField(max_length=128)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
-    story_rating = models.IntegerField(default = 0)
-    gameplay_rating = models.IntegerField(default = 0)
-    graphics_rating = models.IntegerField(default = 0)
-    difficulty_rating = models.IntegerField(default = 0)
+    story_rating = models.IntegerField(default = 0, validators=[MaxValueValidator(5), MinValueValidator(0)])
+    gameplay_rating = models.IntegerField(default = 0, validators=[MaxValueValidator(5), MinValueValidator(0)])
+    graphics_rating = models.IntegerField(default = 0, validators=[MaxValueValidator(5), MinValueValidator(0)])
+    difficulty_rating = models.IntegerField(default = 0, validators=[MaxValueValidator(5), MinValueValidator(0)])
     picture = models.ImageField(upload_to='game_images', blank=True)
     slug = models.SlugField(unique=True)
     
@@ -58,10 +59,10 @@ class Review(models.Model):
     game = models.ForeignKey(Game, on_delete = models.CASCADE)
     title = models.CharField(max_length=128)
     comments = models.CharField(max_length=128)
-    story_rating = models.IntegerField(default = 0)
-    gameplay_rating = models.IntegerField(default = 0)
-    graphics_rating = models.IntegerField(default = 0)
-    difficulty_rating = models.IntegerField(default = 0)
+    story_rating = models.IntegerField(default = 0, validators=[MaxValueValidator(5), MinValueValidator(0)])
+    gameplay_rating = models.IntegerField(default = 0, validators=[MaxValueValidator(5), MinValueValidator(0)])
+    graphics_rating = models.IntegerField(default = 0, validators=[MaxValueValidator(5), MinValueValidator(0)])
+    difficulty_rating = models.IntegerField(default = 0, validators=[MaxValueValidator(5), MinValueValidator(0)])
     
     def __str__(self):
         return self.title
