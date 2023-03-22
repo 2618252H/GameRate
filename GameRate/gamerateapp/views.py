@@ -89,22 +89,21 @@ def game(request, game_name_slug):
                 story_average = story_average + review.story_rating
                 difficulty_average = difficulty_average + review.difficulty_rating
                 count = count + 1
-            
-            context_dict['gameplay_average'] = gameplay_average / count
-            context_dict['graphics_average'] = graphics_average / count
-            context_dict['story_average'] = story_average / count
-            context_dict['difficulty_average'] = difficulty_average / count
+                
+            game.gameplay_rating = gameplay_average / count
+            game.graphics_rating = graphics_average / count
+            game.story_rating = story_average / count
+            game.difficulty_rating = difficulty_average / count
+            game.save()
             
         except:
-            context_dict['gameplay_average'] = 0
-            context_dict['graphics_average'] = 0
-            context_dict['story_average'] = 0
-            context_dict['difficulty_average'] = 0
+            game.gameplay_rating = 0
+            game.graphics_rating = 0
+            game.story_rating = 0
+            game.difficulty_rating = 0
         
     except Game.DoesNotExist:
         context_dict['game'] = None
-        
-    
     
     response = render(request, 'gamerateapp/game.html', context=context_dict)
     return response

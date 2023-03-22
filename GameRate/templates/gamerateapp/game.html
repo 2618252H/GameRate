@@ -14,12 +14,12 @@
 	<h1>{{ game.name }}</h1>
 	<p>Publisher</p>
 		<a href="{% url 'gamerateapp:profile' game.publisher.profile %}">{{ game.publisher.profile.username }}</a><br>
-		<img src="{{MEDIA_URL}}{{ game.picture }}" alt="{{ game.name }} image" />
+		<img src="{{MEDIA_URL}}{{ game.picture }}" width="300" height="300" alt="{{ game.name }} image" />
 		<ul>
-			<li>Story = {{ story_average }}</li>
-			<li>Gameplay = {{ gameplay_average }}</li>
-			<li>Graphics = {{ graphics_average }}</li>
-			<li>Difficulty = {{ difficulty_average }}</li>
+			<li>Story = {{ game.story_rating }}</li>
+			<li>Gameplay = {{ game.gameplay_rating }}</li>
+			<li>Graphics = {{ game.graphics_rating }}</li>
+			<li>Difficulty = {{ game.difficulty_rating }}</li>
 		</ul>
 		<p> {{ game.game_Description }} </p>
 		<a href="/gamerateapp/game/{{game.slug }}/add_review/">Add Review</a>
