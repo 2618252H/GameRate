@@ -18,6 +18,8 @@
             <div class="card" style="width: 18rem;">
                 <div class="card-body">
                     <p class="card-text"><li><a href="{% url 'gamerateapp:game' game.slug %}">{{ game.name }}</a></li></p>
+					<a href="{% url 'gamerateapp:profile' game.publisher.profile %}">{{ game.publisher.profile.username }}</a><br>
+					<img src="{{MEDIA_URL}}{{game.picture }}" width="300" height="300" alt="{{ game.name }}" />
                 </div>
             </div>
         {% endfor %}
@@ -37,6 +39,8 @@
                 <!--<img src="..." class="card-img-top" alt="...">-->
                 <div class="card-body">
                     <p class="card-text"><li><a href="{% url 'gamerateapp:game' game.slug %}">{{ game.name }}</a></li></p>
+					<a href="{% url 'gamerateapp:profile' game.publisher.profile %}">{{ game.publisher.profile.username }}</a><br>
+					<img src="{{MEDIA_URL}}{{game.picture }}" width="300" height="300" alt="{{ game.name }}" />
                 </div>
             </div>
         {% endfor %}
@@ -56,6 +60,8 @@
                 <!--<img src="..." class="card-img-top" alt="...">-->
                 <div class="card-body">
                     <p class="card-text"><li><a href="{% url 'gamerateapp:game' game.slug %}">{{ game.name }}</a></li></p>
+					<a href="{% url 'gamerateapp:profile' game.publisher.profile %}">{{ game.publisher.profile.username }}</a><br>
+					<img src="{{MEDIA_URL}}{{game.picture }}" width="300" height="300" alt="{{ game.name }}" />
                 </div>
             </div>
         {% endfor %}
@@ -75,6 +81,8 @@
                 <!--<img src="..." class="card-img-top" alt="...">-->
                 <div class="card-body">
                     <p class="card-text"><li><a href="{% url 'gamerateapp:game' game.slug %}">{{ game.name }}</a></li></p>
+					<a href="{% url 'gamerateapp:profile' game.publisher.profile %}">{{ game.publisher.profile.username }}</a><br>
+					<img src="{{MEDIA_URL}}{{game.picture }}" width="300" height="300" alt="{{ game.name }}" />
                 </div>
             </div>
         {% endfor %}
@@ -84,25 +92,4 @@
     {% endif %}
     </div>
 </div>
-
-<div>
-    <h2>Top Publishers</h2>
-    <div class="row row-cols-1 row-cols-md-3 g-4">
-    {% if top_publishers %}
-        <ul>
-        {% for publisher in top_publishers %}
-            <div class="card" style="width: 18rem;">
-                <!--<img src="..." class="card-img-top" alt="...">-->
-                <div class="card-body">
-                    <p class="card-text"><li><a href="{% url 'gamerateapp:publisher' game.publisher.profile %}">{{ game.publisher.profile.username }}</a></li></p>
-                </div>
-            </div>
-        {% endfor %}
-        </ul>
-    {% else %}
-        <strong>No top publishers yet!</strong>
-    {% endif %}
-    </div>
-</div>
-
 {% endblock %}

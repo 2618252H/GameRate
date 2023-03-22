@@ -56,7 +56,7 @@ class Game(models.Model):
         
 class Review(models.Model):
     
-    user = models.ForeignKey(UserProfile, on_delete = models.CASCADE)
+    user = models.ForeignKey(User, on_delete = models.CASCADE)
     game = models.ForeignKey(Game, on_delete = models.CASCADE)
     title = models.CharField(max_length=128)
     comments = models.CharField(max_length=128)
