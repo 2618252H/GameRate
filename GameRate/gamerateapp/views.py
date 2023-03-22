@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from gamerateapp.models import Game
 from gamerateapp.models import Category
 from gamerateapp.models import Review, User, Publisher, UserProfile
@@ -76,6 +76,30 @@ def game(request, game_name_slug):
         
         context_dict['game'] = game
         context_dict['reviews'] = reviews
+        try:
+            gameplay_average = 0
+            graphics_average = 0
+            story_average = 0
+            difficulty_average = 0
+            count = 0
+            
+            for review in reviews:
+                gameplay_average = gameplay_average + review.gameplay_rating
+                graphics_average = graphics_average + review.graphics_rating
+                story_average = story_average + review.story_rating
+                difficulty_average = difficulty_average + review.difficulty_rating
+                count = count + 1
+            
+            context_dict['gameplay_average'] = gameplay_average / count
+            context_dict['graphics_average'] = graphics_average / count
+            context_dict['story_average'] = story_average / count
+            context_dict['difficulty_average'] = difficulty_average / count
+            
+        except:
+            context_dict['gameplay_average'] = 0
+            context_dict['graphics_average'] = 0
+            context_dict['story_average'] = 0
+            context_dict['difficulty_average'] = 0
         
     except Game.DoesNotExist:
         context_dict['game'] = None
@@ -86,22 +110,31 @@ def game(request, game_name_slug):
     return response
 
 @login_required
-def add_review(request):
-    
+def add_review(request, game_name_slug):
+    try:
+        game = Game.objects.get(slug=game_name_slug)
+    except Game.DoesNotExist:
+        game = None
+        
+    if game is None:
+        return redirect('/gamerateapp/')
+        
     form = ReviewForm()
     
     if request.method == 'POST':
         form = ReviewForm(request.POST)
         
         if form.is_valid():
-            form.save(commit=True)
+            review = form.save(commit=False)
+            review.game = game
+            review.save()
                 
-            return redirect('/gamerateapp/')
+            return redirect(reverse('gamerateapp:game', kwargs={'game_name_slug': game_name_slug}))
         else:
             print(form.errors)
     
-    return render(request, 'gamerateapp/add_review.html', {'form':form})
-    
+    return render(request, 'gamerateapp/add_review.html', {'form':form, 'game':game})
+
 @login_required
 def register_profile(request):
     form = UserProfileForm()
@@ -116,7 +149,8 @@ def register_profile(request):
             print(form.errors)
     context_dict = {'form': form}
     return render(request, 'gamerateapp/profile_registration.html', context_dict)
-    
+
+@login_required
 def register_publisher(request):
     form = PublisherForm()
     if request.method == 'POST':
@@ -148,7 +182,7 @@ def add_game(request):
     form = GameForm()
     
     if request.method == 'POST':
-        form = GameForm(request.POST)
+        form = GameForm(request.POST, request.FILES)
         
         if form.is_valid():
             form.save(commit=True)
@@ -211,6 +245,11 @@ class ProfileView(View):
             (user, user_profile, form) = self.get_user_details(username)
         except TypeError:
             return redirect(reverse('gamerateapp:index'))
+        
+        try:
+            reviews = Review.objects.filter(user = user)
+        except Review.DoesNotExist:
+            reviews = None
             
         try:
             publisher = Publisher.objects.get(profile = user)
@@ -219,7 +258,7 @@ class ProfileView(View):
             publisher = None
             games = None
             
-        context_dict = {'user_profile': user_profile,'selected_user': user,'form': form, 'publisher':publisher, 'games':games}
+        context_dict = {'user_profile': user_profile,'selected_user': user,'form': form, 'reviews':reviews, 'publisher':publisher, 'games':games}
         return render(request, 'gamerateapp/profile.html', context_dict)
 
     @method_decorator(login_required)
@@ -236,12 +275,17 @@ class ProfileView(View):
             print(form.errors)
             
         try:
-            publisher = Publisher.objects.get(profile = user)
+            reviews = Review.objects.get(user = user)
+        except Review.DoesNotExist:
+            reviews = None
+            
+        try:
+            publisher = Publisher.objects.filter(profile = user)
             games = Game.objects.filter(publisher = publisher)
         except Publisher.DoesNotExist:
             publisher = None
             games = None
             
-        context_dict = {'user_profile': user_profile,'selected_user': user,'form': form, 'publisher':publisher,'games':games}
+        context_dict = {'user_profile': user_profile,'selected_user': user,'form': form, 'reviews':reviews, 'publisher':publisher,'games':games}
     
         return render(request, 'gamerateapp/profile.html', context_dict)
