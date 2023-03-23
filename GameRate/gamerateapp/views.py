@@ -109,7 +109,15 @@ def game(request, game_name_slug):
     return response
 
 @login_required
-def add_review(request, game_name_slug):
+def add_review(request, game_name_slug, username):
+    try:
+        user = User.objects.get(username=username)
+    except UserProfile.DoesNotExist:
+        user = None
+        
+    if user is None:
+        return redirect('/gamerateapp/')
+        
     try:
         game = Game.objects.get(slug=game_name_slug)
     except Game.DoesNotExist:
@@ -125,6 +133,7 @@ def add_review(request, game_name_slug):
         
         if form.is_valid():
             review = form.save(commit=False)
+            review.user = request.user
             review.game = game
             review.save()
                 
@@ -132,7 +141,7 @@ def add_review(request, game_name_slug):
         else:
             print(form.errors)
     
-    return render(request, 'gamerateapp/add_review.html', {'form':form, 'game':game})
+    return render(request, 'gamerateapp/add_review.html', {'form':form, 'game':game, 'user':user})
 
 @login_required
 def register_profile(request):
@@ -150,7 +159,15 @@ def register_profile(request):
     return render(request, 'gamerateapp/profile_registration.html', context_dict)
 
 @login_required
-def register_publisher(request):
+def register_publisher(request, username):
+    try:
+        user = User.objects.get(username=username)
+    except UserProfile.DoesNotExist:
+        user = None
+        
+    if user is None:
+        return redirect('/gamerateapp/')
+        
     form = PublisherForm()
     if request.method == 'POST':
         form = PublisherForm(request.POST, request.FILES)
@@ -161,7 +178,7 @@ def register_publisher(request):
             return redirect(reverse('gamerateapp:index'))
         else:
             print(form.errors)
-    context_dict = {'form':form}
+    context_dict = {'form':form,'user':user}
     return render(request, 'gamerateapp/publisher_registration.html', context_dict)
     
     
@@ -177,20 +194,31 @@ def publishers(request):
     return render(request, 'gamerateapp/publishers.html', context_dict)
    
 @login_required
-def add_game(request):
+def add_game(request, username):
+    try:
+        user = User.objects.get(username=username)
+        publisher = Publisher.objects.get(profile = user)
+    except Publisher.DoesNotExist:
+        publisher = None
+        
+    if publisher is None:
+        return redirect('/gamerateapp/')
+        
     form = GameForm()
     
     if request.method == 'POST':
         form = GameForm(request.POST, request.FILES)
         
         if form.is_valid():
-            form.save(commit=True)
+            game = form.save(commit=False)
+            game.publisher = publisher
+            game.save()
                 
             return redirect('/gamerateapp/')
         else:
             print(form.errors)
     
-    return render(request, 'gamerateapp/add_game.html', {'form':form})
+    return render(request, 'gamerateapp/add_game.html', {'form':form, 'user':user})
     
 
 def get_search_list(max_results=0, starts_with=''):

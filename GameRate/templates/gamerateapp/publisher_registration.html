@@ -14,7 +14,7 @@ Create a Profile
 
 <div class="container">
     <div class="row">
-        <form method="post" action="{% url 'gamerateapp:register_publisher' %}" enctype="multipart/form-data">{% csrf_token %}{{ form.as_p }}<input type="submit" value="Create Profile" /></form>
+        <form method="post" action="/gamerateapp/profile/{{ user.username }}/register_publisher/" enctype="multipart/form-data">{% csrf_token %}{{ form.as_p }}<input type="submit" value="Create Profile" /></form>
     </div>
 </div>
 {% endblock %}

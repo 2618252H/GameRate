@@ -11,12 +11,16 @@
 
 {% block body_block %} 
     {% if category %}
-    <h1>{{ category.name }}</h1>
+    <div class="jumbotron p-4">
+    <div class="container">
+        <h1 class="jumbotron-heading">{{category.name}}</h1>
+    </div>
+	</div>
 	<h2>Games</h2>
     {% if games %}
         <ul>
             {%for game in games%}
-            <li><a href="{% url 'gamerateapp:game' game.slug %}">{{ game.name }}</a></li>
+            <li><a style="font-size:20px" href="{% url 'gamerateapp:game' game.slug %}">{{ game.name }}</a></li>
 			<img src="{{MEDIA_URL}}{{game.picture }}" width="300" height="300" alt="{{ game.name }}" />
             {% endfor %}
         </ul>

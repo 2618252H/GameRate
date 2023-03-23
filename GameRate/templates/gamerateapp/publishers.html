@@ -8,7 +8,11 @@
 {% block body_block %}
 
 <div>
-<h1>Publisher</h1>
+<div class="jumbotron p-4">
+    <div class="container">
+        <h1 class="jumbotron-heading">Publishers</h1>
+    </div>
+</div>
     {% if publishers %}
         <ul>
             {%for p in publishers%}
