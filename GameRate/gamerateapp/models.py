@@ -46,7 +46,6 @@ class Game(models.Model):
     gameplay_rating = models.IntegerField(default = 0, validators=[MaxValueValidator(5), MinValueValidator(0)])
     graphics_rating = models.IntegerField(default = 0, validators=[MaxValueValidator(5), MinValueValidator(0)])
     difficulty_rating = models.IntegerField(default = 0, validators=[MaxValueValidator(5), MinValueValidator(0)])
-    picture = models.ImageField(upload_to='game_images', null=True, blank=True)
     slug = models.SlugField(unique=True)
     
     def save(self, *args, **kwargs):
