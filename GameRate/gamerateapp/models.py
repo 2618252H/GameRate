@@ -17,7 +17,6 @@ class Publisher(models.Model):
     
     profile = models.OneToOneField(User, on_delete=models.CASCADE, primary_key = True)
     website = models.URLField(blank=True)
-    picture = models.ImageField(upload_to='profile_images',null=True, blank=True)
     
     def __str__(self):
         return self.profile.__str__()

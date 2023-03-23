@@ -11,10 +11,15 @@
 
 {% block body_block %}
 	{% if game %}
-	<h1>{{ game.name }}</h1>
+	<div class="jumbotron p-4">
+    <div class="container">
+        <h1 class="jumbotron-heading">{{game.name}}</h1>
+    </div>
+    </div>
+	<img style="float:right" src="{{MEDIA_URL}}{{ game.picture }}" width="300" height="300" alt="{{ game.name }} image" />
 	<h3>Publisher</h3>
 		<a href="{% url 'gamerateapp:profile' game.publisher.profile %}">{{ game.publisher.profile.username }}</a><br>
-		<img src="{{MEDIA_URL}}{{ game.picture }}" width="300" height="300" alt="{{ game.name }} image" />
+		
 		<h2>Average Ratings</h2>
 		<ul>
 			<li>Story = {{ game.story_rating }}</li>
@@ -24,12 +29,15 @@
 		</ul>
 		<h2>Game Description</h2>
 		<p> {{ game.game_Description }} </p>
-		<a href="/gamerateapp/game/{{game.slug }}/add_review/">Add Review</a>
+		{% if user.is_authenticated %}
+		<a href="/gamerateapp/profile/{{user.username}}/game/{{game.slug }}/add_review/">Add Review</a>
+		{% endif %}
 		{% if reviews %}
 		<h2>Reviews</h2>
 		<ul>
 			{% for review in reviews %}
-			<p>{{review.title}}<p>
+			<div class="card" style="padding:5px; margin:10px">
+			<p class="title">{{review.title}}<p>
 			<a href="{% url 'gamerateapp:profile' review.user %}">{{review.user}}</a>
 				<ul>
 					<li>Story = {{ review.story_rating }}</li>
@@ -39,6 +47,7 @@
 				</ul>
 				<p>Comments:</p>
 				<p>{{review.comments}}</p>
+			</div>
 			{% endfor %}
 		</ul>
 		{% else %}

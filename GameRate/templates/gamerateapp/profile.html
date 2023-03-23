@@ -14,7 +14,7 @@ Profile for {{ selected_user.username }}
 
 <div class="container">
     <div class="row">
-        <img src="{{ MEDIA_URL }}{{ user_profile.picture }}" width="300" height="300" alt="{{ selected_user.username }}'s profile image" />
+        <img style="margin:10px" src="{{ MEDIA_URL }}{{ user_profile.picture }}" width="300" height="300" alt="{{ selected_user.username }}'s profile image" />
     <br />
         <div>
             {% if selected_user == user %}
@@ -25,10 +25,10 @@ Profile for {{ selected_user.username }}
 </div>
 {% if publisher %}
 	{% if selected_user == user %}
-	<a href="{% url 'gamerateapp:add_game' %}">Add Game</a>
+	<a href="/gamerateapp/profile/{{ selected_user.username }}/add_game/">Add Game</a>
 	{% endif %}
 {% else %}
-<a href="{% url 'gamerateapp:register_publisher' %}">Become a Publisher</a>
+<a href="/gamerateapp/profile/{{ selected_user.username }}/register_publisher/">Become a Publisher</a>
 {% endif %}
 <h2>Games</h2>
 <ul>
@@ -40,6 +40,7 @@ Profile for {{ selected_user.username }}
 {% if reviews %}
 <h2>Reviews</h2>
 {% for review in reviews %}
+    <div class="card" style="padding:5px; margin:10px">
 		<li><a href="{% url 'gamerateapp:game' review.game.slug %}">{{ review.game.name }}</a></li>
 		<p>{{review.title}}<p>
 		<ul>
@@ -49,6 +50,7 @@ Profile for {{ selected_user.username }}
 			<li>Difficulty = {{ review.difficulty_rating }}</li>
 		</ul>
 		<p>{{review.comments}}</p>
+	</div>
 	{% endfor %}
 	</ul>
 		{% else %}
