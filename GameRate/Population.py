@@ -77,6 +77,25 @@ def populate():
                 'gameplay_rating': 6,
                 'graphics_rating': 7,
                 'difficulty_rating': 8,},
+        {
+                'user': 'user234',
+                'game': 'Game1',
+                'title': 'Review2',
+                'comments': 'Review1 Comments',
+                'story_rating': 1,
+                'gameplay_rating': 8,
+                'graphics_rating': 5,
+                'difficulty_rating': 6,},
+        {
+                'user': 'user123',
+                'game': 'Game3',
+                'title': 'Review1',
+                'comments': 'Review1 Comments',
+                'story_rating': 5,
+                'gameplay_rating': 4,
+                'graphics_rating': 9,
+                'difficulty_rating': 10,},
+        
         ]
     
     for user in users:
@@ -86,7 +105,6 @@ def populate():
     for publisher in publishers:
         publishers = add_user(publisher['name'], publisher['email'], publisher['password'])
         add_publishers(publishers)
-        print(Publisher.profile)
     
     for category in categories:
         add_category(category['name'])
@@ -103,6 +121,7 @@ def populate():
 
 def add_user (username, email, password):
     user = User.objects.create_user(username=username, password=password)
+    user.save()
     return user
 
 def add_userprofile (user):
@@ -134,6 +153,7 @@ def add_game(name, publisher, game_Description, category, story_rating,
     g.gameplay_rating = gameplay_rating
     g.difficulty_rating = difficulty_rating
     
+    g.save()
     return g
 
 def add_review(user, game, title, comments, story_rating, gameplay_rating,
@@ -150,6 +170,7 @@ def add_review(user, game, title, comments, story_rating, gameplay_rating,
     r.graphics_rating = graphics_rating
     r.difficulty_rating = difficulty_rating
     
+    r.save()
     return r
 
 if __name__ == '__main__':
