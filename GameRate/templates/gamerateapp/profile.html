@@ -37,6 +37,7 @@ Profile for {{ selected_user.username }}
 		<img src="{{MEDIA_URL}}{{game.picture }}" width="300" height="300" alt="{{ game.name }}" />
     {% endfor %}
 </ul>
+{% if reviews %}
 <h2>Reviews</h2>
 {% for review in reviews %}
     <div class="card" style="padding:5px; margin:10px">
@@ -51,4 +52,8 @@ Profile for {{ selected_user.username }}
 		<p>{{review.comments}}</p>
 	</div>
 	{% endfor %}
+	</ul>
+		{% else %}
+		        <strong>No reviews currently for this account.</strong>
+		{% endif %}
 {% endblock %}
