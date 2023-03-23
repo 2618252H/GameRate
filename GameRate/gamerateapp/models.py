@@ -8,7 +8,7 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 class UserProfile(models.Model):
     
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    picture = models.ImageField(upload_to='profile_images', blank=True)
+    picture = models.ImageField(upload_to='profile_images',default = 'profile_images/deault.png', blank=True)
     
     def __str__(self):
         return self.user.username
@@ -16,7 +16,6 @@ class UserProfile(models.Model):
 class Publisher(models.Model):
     
     profile = models.OneToOneField(User, on_delete=models.CASCADE, primary_key = True)
-    
     website = models.URLField(blank=True)
     
     def __str__(self):
@@ -26,6 +25,13 @@ class Category(models.Model):
     name = models.CharField(max_length=128, unique=True)
     slug = models.SlugField(unique=True)
     
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.name)
+        super(Category, self).save(*args, **kwargs)
+        
+    class Meta:
+        verbose_name_plural = 'categories'
+
     
     def __str__(self):
         return self.name
@@ -39,7 +45,7 @@ class Game(models.Model):
     gameplay_rating = models.IntegerField(default = 0, validators=[MaxValueValidator(5), MinValueValidator(0)])
     graphics_rating = models.IntegerField(default = 0, validators=[MaxValueValidator(5), MinValueValidator(0)])
     difficulty_rating = models.IntegerField(default = 0, validators=[MaxValueValidator(5), MinValueValidator(0)])
-    picture = models.ImageField(upload_to='game_images', blank=True)
+    picture = models.ImageField(upload_to='game_images', null=True, blank=True)
     slug = models.SlugField(unique=True)
     
     def save(self, *args, **kwargs):
@@ -47,7 +53,7 @@ class Game(models.Model):
         super(Game, self).save(*args, **kwargs)
         
     class Meta:
-        verbose_name_plural = 'Categories'
+        verbose_name_plural = 'Games'
     
     def __str__(self):
         return self.name
