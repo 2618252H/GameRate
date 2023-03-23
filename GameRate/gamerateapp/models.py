@@ -17,7 +17,6 @@ class Publisher(models.Model):
     
     profile = models.OneToOneField(User, on_delete=models.CASCADE, primary_key = True)
     website = models.URLField(blank=True)
-    picture = models.ImageField(upload_to='profile_images', blank=True)
     
     def __str__(self):
         return self.profile.__str__()
@@ -46,6 +45,7 @@ class Game(models.Model):
     gameplay_rating = models.IntegerField(default = 0, validators=[MaxValueValidator(5), MinValueValidator(0)])
     graphics_rating = models.IntegerField(default = 0, validators=[MaxValueValidator(5), MinValueValidator(0)])
     difficulty_rating = models.IntegerField(default = 0, validators=[MaxValueValidator(5), MinValueValidator(0)])
+    picture = models.ImageField(upload_to='game_images', null=True, blank=True)
     slug = models.SlugField(unique=True)
     
     def save(self, *args, **kwargs):

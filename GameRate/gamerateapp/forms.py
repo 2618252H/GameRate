@@ -18,7 +18,7 @@ class PublisherForm(forms.ModelForm):
     
     class Meta:
         model = Publisher
-        fields = ('website','profile','picture')
+        fields = ('website','profile',)
 
 class GameForm(forms.ModelForm):
     name = forms.CharField(max_length=128, help_text= "What is the name of the game?")
