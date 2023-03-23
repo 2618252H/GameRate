@@ -37,6 +37,7 @@ Profile for {{ selected_user.username }}
 		<img src="{{MEDIA_URL}}{{game.picture }}" width="300" height="300" alt="{{ game.name }}" />
     {% endfor %}
 </ul>
+{% if reviews %}
 <h2>Reviews</h2>
 {% for review in reviews %}
 		<li><a href="{% url 'gamerateapp:game' review.game.slug %}">{{ review.game.name }}</a></li>
@@ -49,4 +50,8 @@ Profile for {{ selected_user.username }}
 		</ul>
 		<p>{{review.comments}}</p>
 	{% endfor %}
+	</ul>
+		{% else %}
+		        <strong>No reviews currently for this account.</strong>
+		{% endif %}
 {% endblock %}

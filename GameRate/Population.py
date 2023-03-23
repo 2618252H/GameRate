@@ -48,8 +48,8 @@ def populate():
         add_category(category['name'])
         
     for game in games:
-        add_game(game['name'], Publisher.profile(username = game['publisher']),
-                 game['game_Description'], Category.objects.filter(name = game['category']), game['story_rating'], game['gameplay_rating'],
+        add_game(game['name'], game['publisher'], game['game_Description'], 
+                 game['category'], game['story_rating'], game['gameplay_rating'],
                  game['graphics_rating'], game['difficulty_rating'])
 
 
@@ -75,7 +75,10 @@ def add_category(name):
 def add_game(name, publisher, game_Description, category, story_rating,
              gameplay_rating, graphics_rating, difficulty_rating):
     
-    g = Game.objects.get_or_create(name = name, publisher = publisher, category = category)[0]
+    publisher_name = Publisher.objects.get(profile__username = publisher)
+    category_name= Category.objects.get(name = category)
+    
+    g = Game.objects.get_or_create(name = name, publisher = publisher_name, category = category_name)[0]
     
     g.game_Description = game_Description
     g.story_rating = story_rating
