@@ -18,17 +18,17 @@ class PublisherForm(forms.ModelForm):
     
     class Meta:
         model = Publisher
-        fields = ('website','profile', 'picture',)
+        fields = ('website',)
 
 class GameForm(forms.ModelForm):
     name = forms.CharField(max_length=128, help_text= "What is the name of the game?")
     
     class Meta:
         model = Game
-        fields = ('name', 'picture', 'publisher','category', 'game_Description')
+        fields = ('name', 'picture','category', 'game_Description')
 
 class ReviewForm(forms.ModelForm):
     class Meta:
         model = Review
-        fields = ('user','title', 'comments', 'story_rating', 'gameplay_rating', 
+        fields = ('title', 'comments', 'story_rating', 'gameplay_rating', 
                   'graphics_rating', 'difficulty_rating')
