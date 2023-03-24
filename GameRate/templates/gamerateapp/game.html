@@ -16,7 +16,11 @@
         <h1 class="jumbotron-heading">{{game.name}}</h1>
     </div>
     </div>
+	{% if game.picture is not null %}
 	<img style="float:right" src="{{MEDIA_URL}}{{ game.picture }}" width="300" height="300" alt="{{ game.name }} image" />
+	{% else %}
+	<img src="/media/game_images/No_images.png" width="300" height="300" alt="No image" />
+	{% endif %}
 	<h3>Publisher</h3>
 		<a href="{% url 'gamerateapp:profile' game.publisher.profile %}">{{ game.publisher.profile.username }}</a><br>
 		
