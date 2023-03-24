@@ -24,7 +24,11 @@
 					<p>Average gameplay rating of {{ game.gameplay_rating }}</p>
 					<p>Publisher</p>
 					<a href="{% url 'gamerateapp:profile' game.publisher.profile %}">{{ game.publisher.profile.username }}</a><br>
+					{% if game.picture is not null %}
 					<img src="{{MEDIA_URL}}{{game.picture }}" width="300" height="300" alt="{{ game.name }}" />
+					{% else %}
+					<img src="{{MEDIA_URL}}game_images/No_images.png" width="300" height="300" alt="No image" />
+					{% endif %}
                 </div>
             </div>
         {% endfor %}

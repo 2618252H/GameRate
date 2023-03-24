@@ -8,7 +8,7 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 class UserProfile(models.Model):
     
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    picture = models.ImageField(upload_to='profile_images',default = 'profile_images/deault.png', blank=True)
+    picture = models.ImageField(upload_to='profile_images',default = 'profile_images/default.png', blank=True)
     
     def __str__(self):
         return self.user.username
@@ -45,7 +45,7 @@ class Game(models.Model):
     gameplay_rating = models.IntegerField(default = 0, validators=[MaxValueValidator(5), MinValueValidator(0)])
     graphics_rating = models.IntegerField(default = 0, validators=[MaxValueValidator(5), MinValueValidator(0)])
     difficulty_rating = models.IntegerField(default = 0, validators=[MaxValueValidator(5), MinValueValidator(0)])
-    picture = models.ImageField(upload_to='game_images', null=True, blank=True)
+    picture = models.ImageField(upload_to='game_images',default='game_images/no_image.jpg', blank=True)
     slug = models.SlugField(unique=True)
     
     def save(self, *args, **kwargs):

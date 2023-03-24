@@ -14,7 +14,11 @@ Profile for {{ selected_user.username }}
 
 <div class="container">
     <div class="row">
+	{% if  user_profile.picture is not null%}
         <img style="margin:2px" src="{{ MEDIA_URL }}{{ user_profile.picture }}" width="300" height="300" alt="{{ selected_user.username }}'s profile image" />
+	{% else %}
+		<img style="margin:2px" src="/media/profile_images/deault.png" width="300" height="300" alt="deault" />
+	{% endif %}
     <br />
         <div>
             {% if selected_user == user %}
